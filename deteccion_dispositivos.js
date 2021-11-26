@@ -65,11 +65,11 @@ export default function userDeviceInfo(id) {
     $id.innerHTML += `<p><mark>Descarga nuestro software para Windows</mark></p`;
   }
 
-  /* Redirecciones*/
+  /* Redirecciones
   if (isMobile.android()) {
     window.location.href = "https://www.unlam.edu.ar/";
   }
-}
+}*/
 
 //userAgent = es una cadena de texto que nos da cierta informacion sobre el dispositivo y el navegador desde los cuales se esta visualizando el sitio web.
 
