@@ -1,0 +1,459 @@
+/***** Reset CSS *****/
+
+:root{
+    --main-font: sans-serif;
+    --font-size: 16px;
+    --main-color: #f7df1e;
+    --second-color: #222;
+    --main-modal-color: rgba(247,222,30,0.85);
+    --second-modal-color: rgba(34, 34, 34, 0.85);
+    --container-width: 1200px;
+}
+
+/**** Reseteo basico html del modelo de caja****/
+
+html{
+    box-sizing: border-box;
+    font-family: var(--main-font);
+    font-size: var(--font-size);
+    scroll-behavior: smooth;
+}
+/*Todos los elementos html heredan el box-sizing*/
+*,
+*:before,
+*:after{
+    box-sizing: inherit
+}
+
+/*en la medida de lo posible queremos que nuestro sitio sea fluido y responsive*/
+body{
+    margin: 0;
+    overflow-x: hidden; /*el contenido desbordante se oculta y no genera scroll horizontal*/
+}
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+/*****  menu hamburguesa  *****/
+
+/*Por cuestiones de usabilidad y expriencia de usuario (UX), un boton hamburguesa deberia ir en una de las esquinas inferiores (pensando en un dispositivo movil)*/
+
+/*position: sticky -> cuando el header llegue a la posicion 0 en el margen de top, se va a comportar como si estuviera fija*/
+header{
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+    background-color: var(--main-color);
+    color: var(--second-color);
+}
+
+header h1{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section{
+    padding: 2rem;
+    padding-top: 4rem;/*para que no se encime el header al 1° section*/
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: var(--container-width);
+    min-height: 100vh;
+    text-align: center;
+}
+
+.panel{
+    position: fixed;
+    z-index: 998;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    overflow-y: auto;
+    background-color: var(--second-modal-color);
+    opacity: 0;
+    transition: transform .3s ease, opacity 0.3s ease;
+    /*para que el menu salga desde arriba*/
+    transform: translate(0, -100%);
+    /*De abajo*/
+    transform: translate(0, 100%);
+    /*De la derecha*/
+    transform: translate(100%, 0);
+    /*De la izquierda*/
+    transform: translate(-100%, 0)
+}/*con top-bottom-left-right es como que estiramos el elemento*/
+
+/*cuando tenga la clase .panel.is-active, que el translate vuelva a su valor original */
+.panel.is-active{
+    transform: translate(0, 0);
+    opacity: 1;
+}
+/*sacando los transforms el panel desapareceria y apareceria por efecto de opacity unicamente - para ello debemos agregar la propiedad visibility: hidden y visibility: visible en la clase .panel.is-active */
+.panel-btn{
+    position: fixed;
+    z-index: 999;
+    bottom: 1vh;
+    right: 1vw;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color)
+}/*se le aplica flexbox porque las rayitas del btn hamburguesa se forman por el span hamburger-inner y su pseudoelemento after y before, por lo cual, con flexbox logramos que dichas rayitas queden centradas.*/
+
+.menu{
+    width: inherit;/*que tome la anchura del contenedor*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.menu a{
+    padding: 2rem;
+    width: inherit;/*para que la interaccion este al 100% del menu*/
+    display: block;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--main-color);
+    transition: all 0.3s ease;
+}
+
+.menu a:hover{
+    font-weight: bold;
+    color: var(--second-color);
+    background-color: var(--main-modal-color);
+}
+
+/******  Eventos del Teclado ******/
+
+.stage{
+    display: flex;
+    min-height: 50vh;
+    background-color: var(--second-color);
+}
+
+.ball {
+    margin: auto;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: var(--main-color)
+}
+
+/******  ScrollTopButton ******/
+
+.scroll-top-btn{
+    position: fixed;
+    z-index: 999;
+    bottom: 1vh;
+    right: calc(4.25rem + 1vw);/*la funcion calc() me permite hacer operaciones aritmeticas en css, de esta forma le digo a que distancia del panel-btn quiero que este*/
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: var(--main-color);
+    color: var(--second-color);
+    cursor: pointer;
+    outline: 0;
+    border: 0;
+    transition: all 0.3s ease-out
+}
+
+.scroll-top-btn:hover{
+    background-color: var(--second-color);
+    color: var(--main-color);
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+/******  DarkThemeButton *****/
+
+.dark-theme-btn{
+    position: fixed;
+    z-index: 999;
+    bottom: 1vh;
+    left: 1vw;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: var(--main-color);
+    color: var(--second-color);
+    cursor: pointer;
+    outline: 0;
+    border: 0;
+    transition: all 0.3s ease-out
+}
+
+.dark-theme-btn:hover{
+    background-color: var(--second-color);
+    color: var(--main-color);
+}
+
+.dark-mode{
+    background-color: var(--second-color);
+    color: var(--main-color);
+}
+
+/*********  Network Status  **********/
+.online,
+.offline{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    background-color: #1b5e20;
+    color: #fff;
+}
+
+.offline{
+    background-color: #b71c1c;
+}
+
+/********** Search Filters ***********/
+
+.cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+    background-color: var(--second-color);
+    color: var(--main-color);
+    transition: all 0.3s ease-out;
+}
+
+.card img{
+    width: 100%;
+    height: auto;
+}
+
+.card figcaption{
+    padding: 1rem;
+}
+
+.filter{
+    /*display: none;*/
+    visibility: hidden;
+    opacity: 0;
+    order: 1;
+}
+
+/*********** Responsive Slider ************/
+
+.slider{
+    position: relative;
+    border: thin solid black;
+    width: 80%;
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.slider-slides{
+    position: relative;
+    height: 400px;
+}
+
+.slider-slide{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease;
+}
+
+.slider-slide img{
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+    object-position: 50% 0%;
+}
+
+.slider-slide.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+.slider-btns{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.slider a{
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: thin solid #000;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+    transition: all 0.3s ease; 
+}
+
+.slider a:hover{
+    color: #4d4d4d;
+}
+
+/*  object-fit: cover; -> hace que la imagen adapte su forma y sea responsive, se adapta al ancho del contenedor. */
+
+#seccion13 video{
+   height: 400px;
+}
+
+/*******   ScrollSpy   *********/
+@media screen and (min-width: 1024px){
+    body{
+        display: grid;
+        grid-template-columns: 80% 20%;
+        grid-template-rows: 4rem auto;
+        grid-template-areas: "header header" "main panel";
+    }
+
+    main{
+        grid-area: main;
+    }
+
+    .header{
+        grid-area: header;
+    }
+
+    .panel{
+        grid-area: panel;
+        align-self: start;
+        position: sticky;
+        top: 4rem;
+        justify-content: flex-start;
+        background-color: var(--second-color);
+        transform: translate(0, 0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .panel-btn{
+        display: none
+    }
+
+    .menu{
+        justify-content: start;
+        text-align: right;
+    }
+
+    .menu a{
+        font-size: 1rem;
+        padding: 0.75rem
+    }
+
+    .menu a:hover, .menu a.active{
+        color: var(--second-color);
+        background-color: var(--main-color);
+    }
+
+    .scroll-top-btn{
+        right: initial;
+        left: calc(4.25rem + 1vw)
+    }
+}
+
+/********  ContactForm Validations   ********/
+.contact-form{
+    --form-ok-color: #4caf50;
+    --form-error-color: #f44336;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.contact-form > *{
+    padding: 0.5rem;
+    margin: 1rem auto;
+    display: block;
+    width: 100%;
+}
+
+.contact-form textarea{
+    resize: none;
+}
+
+.contact-form legend, .contact-form-response{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.contact-form input, .contact-form textarea{
+    font-size: 1rem;
+    font-family: sans-serif;
+}
+
+.contact-form input[type="submit"]{
+    width: 50%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contact-form *::placeholder{
+    color: #000
+}
+
+.contact-form [required]:valid{
+    border: thin solid var(--form-ok-color)
+}
+
+.contact-form [required]:invalid{
+    border: thin solid var(--form-error-color)
+}
+
+.contact-form-error{
+    margin-top: -1rem;
+    font-size: 80%;
+    background-color: var(--form-error-color);
+    color: #fff;
+    transition: all 800ms ease;
+}
+
+.contact-form-error.is-active{
+    display: block;
+    animation: show-message 1s 1 normal 0s ease-out both;
+}
+
+.none{
+    display: none;
+}
+
+@keyframes show-message{
+    0%{
+        visibility: hidden;
+        opacity: 0
+    }
+
+    100%{
+        visibility: visible;
+        opacity: 1;
+    }
+}
